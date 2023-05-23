@@ -1,4 +1,4 @@
-# webhookstest
+# CDSHooksTest
 
 example code: index.js
 - discovery: GET /cds-services
