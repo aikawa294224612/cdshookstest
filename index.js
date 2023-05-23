@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
+const axios = require('axios');
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,9 @@ const card = `{
 app.use(bodyParser.json());
 
 app.get('/cds-services', (req, res) => {
+
+    res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
+
     const response = {
         services: [
           {
@@ -38,29 +42,31 @@ app.get('/cds-services', (req, res) => {
       res.json(response);
 
   });
-  
 
 app.post('/cds-services/patient-view', (req, res) => {
 
-  const payload = req.body;
+    res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
 
-  const fhirServer = payload.fhirServer;
-  const patientId = payload.context.patientId;
-  const name = payload.prefetch.patient.name[0].text;
-  const id = payload.prefetch.patient.identifier[0].value;
+    const payload = req.body;
 
-  const jsonData = JSON.parse(card);
+    const fhirServer = payload.fhirServer;
+    const patientId = payload.context.patientId;
+    const name = payload.prefetch.patient.name[0].text;
+    const id = payload.prefetch.patient.identifier[0].value;
 
-  //One-sentence, <140-character summary message for display to the user inside of this card.
-  jsonData.cards[0].summary = "病患姓名為: " + name ;
-  //Unique identifier of the card.
-  jsonData.cards[0].uuid = crypto.randomUUID() ;
-  //info, warning, critical
-  jsonData.cards[0].indicator = "info";
-  //https://cds-hooks.org/specification/current/#source
-  jsonData.cards[0].source.label = "病患身分證: " + id ;
+    const jsonData = JSON.parse(card);
+    const cards = jsonData.cards[0];
 
-  res.status(200).send(jsonData);
+    //One-sentence, <140-character summary message for display to the user inside of this card.
+    cards.summary = "病患姓名為: " + name ;
+    //Unique identifier of the card.
+    cards.uuid = crypto.randomUUID() ;
+    //info, warning, critical
+    cards.indicator = "info";
+    //https://cds-hooks.org/specification/current/#source
+    cards.source.label = "病患身分證: " + id ;
+
+    res.status(200).send(jsonData);
 });
 
 app.listen(port, () => {
