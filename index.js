@@ -5,17 +5,8 @@ const cors = require('cors');
 
 const app = express();
 const port = 3000;
-
-const corsOptions = {
-    origin: [
-      'http://www.example.com',
-      'http://localhost:8080',
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  };
   
-app.use(cors(corsOptions));
+app.use(cors());
 
 const card = `{
     "cards": [
