@@ -31,7 +31,7 @@ app.get('/cds-services', (req, res) => {
             hook: 'patient-view',
             title: 'Patient View Service',
             description: 'A CDS Hooks service for patient view.',
-            id: 'patient-view-service',
+            id: 'patient-view',
             prefetch: {
               patient: 'Patient/{{context.patientId}}'
             }
