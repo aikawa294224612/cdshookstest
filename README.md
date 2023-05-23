@@ -30,3 +30,5 @@ Endpoint: https://cds-hooks-example.onrender.com
 
 ## Reference
 - https://cds-hooks.org/
+- Troubleshooting: https://groups.google.com/g/cds-hooks/c/UAOc7gzZflQ
+- Learning: https://www.youtube.com/watch?v=Ufv0kaD936A 
