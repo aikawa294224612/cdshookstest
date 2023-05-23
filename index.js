@@ -1,9 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+const corsOptions = {
+    origin: [
+      'http://www.example.com',
+      'http://localhost:8080',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  };
+  
+app.use(cors(corsOptions));
 
 const card = `{
     "cards": [
@@ -21,8 +33,6 @@ const card = `{
 app.use(bodyParser.json());
 
 app.get('/cds-services', (req, res) => {
-
-    res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
 
     const response = {
         services: [
@@ -43,8 +53,6 @@ app.get('/cds-services', (req, res) => {
   });
 
 app.post('/cds-services/patient-view', (req, res) => {
-
-    res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
 
     const payload = req.body;
 
